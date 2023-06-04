@@ -19,7 +19,7 @@
         "Minecraft",
         "Minecraft-Bedrock"
     ],
-    "author": "M. Scott Lassiter, Wayfind Kids",
+    "author": "M. Scott Lassiter, Wayfind Kids and Graphic Art Quest",
     "license": "GPL-3.0-or-later",
     "bugs": {
         "url": "https://github.com/GraphicArtQuest/Bedrock-Debug-Screen/issues"
@@ -33,6 +33,6 @@
         "prettier": "^2.8.8"
     },
     "dependencies": {
-        "@minecraft/server": "^1.1.0"
+        "@minecraft/server": "^1.2.0-beta.1.19.80-stable"
     }
 }
