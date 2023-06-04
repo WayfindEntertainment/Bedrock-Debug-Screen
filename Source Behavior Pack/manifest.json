@@ -1,0 +1,32 @@
+{
+    "format_version": 2,
+    "header": {
+        "description": "Adds debug screen features to the Bedrock version",
+        "name": "Minecraft Bedrock Debug Screen",
+        "uuid": "848c62e9-740e-40ad-8135-45a1639d0757",
+        "version": [1, 0, 0],
+        "min_engine_version": [1, 16, 0]
+    },
+    "modules": [
+        {
+            "description": "Minecraft Bedrock Debug Screen Behavior Pack",
+            "type": "data",
+            "uuid": "ec0ab19e-ec9d-4598-af5d-82a99f84f827",
+            "version": [1, 0, 0]
+        },
+        {
+            "description": "Minecraft Bedrock Debug Screen scripts",
+            "language": "javascript",
+            "type": "script",
+            "uuid": "b02c742b-3e51-456b-b671-f92d7b7deee0",
+            "version": [1, 0, 0],
+            "entry": "scripts/main.js"
+        }
+    ],
+    "dependencies": [
+        {
+            "module_name": "@minecraft/server",
+            "version": "1.2.0-beta"
+        }
+    ]
+}
