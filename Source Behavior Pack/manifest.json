@@ -1,7 +1,7 @@
 {
     "format_version": 2,
     "header": {
-        "description": "Adds debug screen features to the Bedrock version",
+        "description": "Adds debug screen features to the Bedrock version. Activate using the chat window by typing:\n\"!debug on\" or \"!debug off\".",
         "name": "Minecraft Bedrock Debug Screen",
         "uuid": "848c62e9-740e-40ad-8135-45a1639d0757",
         "version": [1, 0, 0],
