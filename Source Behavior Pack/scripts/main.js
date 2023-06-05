@@ -3,6 +3,26 @@
 import { world, system } from '@minecraft/server'
 
 /**
+ * The Player class defines an entity controlled by a human player.
+ * @typedef {import('@minecraft/server').Player} Player
+ */
+
+// Weather Determination
+//
+// Unfortunately, there is not yet a way to query weather. Instead, the work around is to subscribe to the
+// weatherChange event and get it that way.
+let weather = 'Not yet identified'
+world.events.weatherChange.subscribe((event) => {
+    if (event.raining && event.lightning) {
+        weather = 'thunder'
+    } else if (event.raining) {
+        weather = 'rain'
+    } else {
+        weather = 'clear'
+    }
+})
+
+/**
  * Turns Minecraft's day tick number into a 24 based hour time string (e.g. 23:59).
  * @param {number} time The game tick time. Must be coercible to an integer between 0 and 24000.
  * @returns {string|undefined} The translated time of day value.
@@ -24,24 +44,14 @@ function translateTimeOfDay(time) {
     return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`
 }
 
-function newPlayer(player) {
-    // Weather
-    //
-    // Unfortunately, there is not yet a way to query weather. Instead, the work around is to subscribe to the
-    // weatherChange event and get it that way.
-    let weather = 'Not yet set'
-    world.events.weatherChange.subscribe((event) => {
-        if (event.raining && event.lightning) {
-            weather = 'thunder'
-        } else if (event.raining) {
-            weather = 'rain'
-        } else {
-            weather = 'clear'
-        }
-    })
-
+/**
+ * Starts the interval command that shows the debug menu for a player.
+ * @param {Player} player An instance of a Minecraft `Player` class entity object
+ * @returns {function} a function handle that can be used to clear the `setInterval` call later.
+ */
+function showDebugInfo(player) {
     // Calculations run every tick
-    system.runInterval(() => {
+    return system.runInterval(() => {
         const { location } = player
         const playerBlock = {
             x: Math.floor(location.x),
@@ -132,10 +142,18 @@ Day ${day} ${translateTimeOfDay(world.getTime())}
     })
 }
 
-world.events.worldInitialize.subscribe(() => {
-    const players = world.getAllPlayers()
-    if (players.length > 0) {
-        players.forEach(newPlayer)
-        world.events.playerJoin.subscribe(newPlayer)
+// Set up the custom command listeners
+let runningDebugFunctionCallback
+world.events.beforeChat.subscribe((eventData) => {
+    const player = eventData.sender
+    // ESLint thinks this next line is invalid because it erroneously believes eventData.cancel is read0only, but it
+    //      isn't. This line prevents showing the typed custom command text in the chat window.
+    // eslint-disable-next-line no-param-reassign
+    eventData.cancel = true
+    if (eventData.message === '!debug on') {
+        runningDebugFunctionCallback = showDebugInfo(player)
+    } else if (eventData.message === '!debug off') {
+        system.clearRun(runningDebugFunctionCallback)
+        player.onScreenDisplay.setActionBar('Debug Menu Closed')
     }
 })
