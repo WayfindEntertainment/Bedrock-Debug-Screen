@@ -45,6 +45,9 @@ Contributions are welcome! Please help keep this project open and inclusive. Ref
 
 While I don't expect most children to delve into the intricacies of software development, the older they get the more likely they are to search things like this out. And even if they don't come to this particular project repository, they are still the target audience of the developed mod itself. Therefore, keep the rating for this project at a PG level or better.
 
+<details>
+<summary><i>See more contributing instructions</i></summary>
+
 Here are some ways you can contribute.
 
 ## Submit Issues
@@ -83,6 +86,8 @@ cd Bedrock-Debug-Screen
 Use the command `npm run dev` to package the source files into the Minecraft behavior pack development folder.
 
 All commits must follow the [GraphicArtQuest Common Commit Guidance][gaq common commit]. *This specification is inspired by and supersedes the [Angular Commit Message](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit).* This project has no custom scopes.
+
+</details>
 
 # License
 
