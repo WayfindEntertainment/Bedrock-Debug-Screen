@@ -54,11 +54,13 @@ function showDebugInfo(player) {
     return system.runInterval(() => {
         const { location } = player
         const playerBlock = {
+            // The block coordinates the player occupies
             x: Math.floor(location.x),
             y: Math.floor(location.y),
             z: Math.floor(location.z)
         }
         const playerChunk = {
+            // The chunk the player is in
             x: Math.floor(playerBlock.x / 16),
             y: Math.floor(playerBlock.y / 16),
             z: Math.floor(playerBlock.z / 16)
@@ -66,6 +68,7 @@ function showDebugInfo(player) {
         const playerChunkString = `${playerChunk.x}, ${playerChunk.y}, ${playerChunk.z}`
 
         const playerChunkPosition = {
+            // The relative position within that chunk
             x: playerBlock.x % 16,
             y: playerBlock.y % 16,
             z: playerBlock.z % 16
@@ -79,13 +82,15 @@ function showDebugInfo(player) {
         const block = player.getBlockFromViewDirection()
         let blockString = ''
         if (block?.typeId) {
+            // If no block is returned, trying to run any of these operations throws an error
             if (block.isWaterlogged) {
                 blockString = 'waterlogged '
             }
             if (block.typeId.substring(0, 10) === 'minecraft:') {
+                // Removes the minecraft namespace for brevity
                 blockString += block.typeId.substring(10, block.typeId.length)
             } else {
-                blockString += block.typeId
+                blockString += block.typeId // If not minecraft namespace, use the full value
             }
             blockString += ` (${block.x}, ${block.y}, ${block.z})`
         } else {
@@ -112,6 +117,7 @@ function showDebugInfo(player) {
         }
 
         // Display the final output
+        // The final blank lines at the end are for action bar positioning above the hot bar to minimize interference
         player.onScreenDisplay.setActionBar(
             // eslint-disable-next-line prettier/prettier
             `${
@@ -137,7 +143,6 @@ Day ${day} ${translateTimeOfDay(world.getTime())}
 
 
  `
-            // The final lines are for action bar positioning above the hot bar
         )
     })
 }
