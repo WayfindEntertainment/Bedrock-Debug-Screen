@@ -12,14 +12,8 @@ import { world, system } from '@minecraft/server'
 // Unfortunately, there is not yet a way to query weather. Instead, the work around is to subscribe to the
 // weatherChange event and get it that way.
 let weather = 'Not yet identified'
-world.events.weatherChange.subscribe((event) => {
-    if (event.raining && event.lightning) {
-        weather = 'thunder'
-    } else if (event.raining) {
-        weather = 'rain'
-    } else {
-        weather = 'clear'
-    }
+world.beforeEvents.weatherChange.subscribe((event) => {
+    weather = event.newWeather
 })
 
 /**
@@ -53,6 +47,20 @@ function showDebugInfo(player) {
     // Calculations run every tick
     return system.runInterval(() => {
         const { location } = player
+
+        const playerSpawn = player.getSpawnPoint()
+        let playerSpawnString = ''
+        if (playerSpawn) {
+            const spawnDimension = playerSpawn.dimension.id.substring(
+                10,
+                playerSpawn.dimension.id.length
+            )
+            playerSpawnString = `${spawnDimension} (${playerSpawn?.x}, ${playerSpawn?.y}, ${playerSpawn?.z})`
+        } else {
+            const defaultSpawn = world.getDefaultSpawnLocation()
+            playerSpawnString = `World spawn: (${defaultSpawn.x}, ${defaultSpawn.y}, ${defaultSpawn.z})`
+        }
+
         const playerBlock = {
             // The block coordinates the player occupies
             x: Math.floor(location.x),
@@ -81,39 +89,67 @@ function showDebugInfo(player) {
 
         const block = player.getBlockFromViewDirection()
         let blockString = ''
-        if (block?.typeId) {
-            // If no block is returned, trying to run any of these operations throws an error
-            if (block.isWaterlogged) {
+        if (block?.block.isValid()) {
+            // If no block is returned, or block is in an unloaded chunk, trying any of these operations throws an error
+            if (block.block.isWaterlogged) {
                 blockString = 'waterlogged '
             }
-            if (block.typeId.substring(0, 10) === 'minecraft:') {
+            if (block.block.typeId.substring(0, 10) === 'minecraft:') {
                 // Removes the minecraft namespace for brevity
-                blockString += block.typeId.substring(10, block.typeId.length)
+                blockString += block.block.typeId.substring(10, block.block.typeId.length)
             } else {
-                blockString += block.typeId // If not minecraft namespace, use the full value
+                blockString += block.block.typeId // If not minecraft namespace, use the full value
             }
-            blockString += ` (${block.x}, ${block.y}, ${block.z})`
+            blockString += ` (${block.block.x}, ${block.block.y}, ${block.block.z})`
         } else {
             blockString = 'None'
         }
 
         const entity = player.getEntitiesFromViewDirection()[0]
         let entityString = ''
-        if (entity?.typeId) {
-            if (entity.typeId.substring(0, 10) === 'minecraft:') {
-                entityString += entity.typeId.substring(10, entity.typeId.length)
+        if (entity?.entity.typeId) {
+            if (entity.entity.typeId.substring(0, 10) === 'minecraft:') {
+                entityString += entity.entity.typeId.substring(10, entity.entity.typeId.length)
             } else {
                 entityString += entity.typeId
             }
 
-            if (entity?.nameTag) {
-                entityString += ` "${entity.nameTag}" `
+            if (entity?.entity.nameTag) {
+                entityString += ` "${entity.entity.nameTag}" `
             }
 
-            const loc = entity.location
+            const loc = entity.entity.location
             entityString += ` (${loc.x.toFixed(1)}, ${loc.y.toFixed(1)}, ${loc.z.toFixed(1)})`
         } else {
             entityString = 'None'
+        }
+
+        let moonPhaseString = ''
+        switch (world.getMoonPhase()) {
+            case 1:
+                moonPhaseString = 'Waning Gibbous'
+                break
+            case 2:
+                moonPhaseString = 'First Quarter'
+                break
+            case 3:
+                moonPhaseString = 'Waning Crescent'
+                break
+            case 4:
+                moonPhaseString = 'New Moon'
+                break
+            case 5:
+                moonPhaseString = 'Waxing Crescent'
+                break
+            case 6:
+                moonPhaseString = 'Last Quarter'
+                break
+            case 7:
+                moonPhaseString = 'Waxing Gibbous'
+                break
+            default:
+                moonPhaseString = 'Full Moon'
+                break
         }
 
         // Display the final output
@@ -123,6 +159,7 @@ function showDebugInfo(player) {
             `${
                 player.name
             }                                                                                             
+Player Spawn Point: ${playerSpawnString}
 Position / Velocity
 X: ${location.x.toFixed(2).padStart(8, ' ')} / ${velocity.x.toFixed(6)}
 Y: ${location.y.toFixed(2).padStart(8, ' ')} / ${velocity.y.toFixed(6)}
@@ -134,10 +171,10 @@ Looking at
   Block:  ${blockString}
   Entity: ${entityString}
 
-Dimension: ${player.dimension.id}
+Dimension: ${player.dimension.id.substring(10, player.dimension.id.length)}
 Weather:   ${weather}
-Day ${day} ${translateTimeOfDay(world.getTime())}
-
+Day ${day} ${translateTimeOfDay(world.getTimeOfDay())}
+Moon Phase: ${moonPhaseString}
 
 
 
@@ -149,16 +186,29 @@ Day ${day} ${translateTimeOfDay(world.getTime())}
 
 // Set up the custom command listeners
 let runningDebugFunctionCallback
-world.events.beforeChat.subscribe((eventData) => {
+let debugHasBeenActivatedBefore = false
+world.beforeEvents.chatSend.subscribe((eventData) => {
     const player = eventData.sender
-    // ESLint thinks this next line is invalid because it erroneously believes eventData.cancel is read0only, but it
+    // ESLint thinks this next line is invalid because it erroneously believes eventData.cancel is read only, but it
     //      isn't. This line prevents showing the typed custom command text in the chat window.
     // eslint-disable-next-line no-param-reassign
     eventData.cancel = true
-    if (eventData.message === '!debug on') {
+    if (eventData.message === '!debug on' && debugHasBeenActivatedBefore === false) {
+        // Must not let this function run if it already has been. If it is run twice, the user will not be able
+        //  to clear this callback function from the system and it will run forever.
         runningDebugFunctionCallback = showDebugInfo(player)
+        debugHasBeenActivatedBefore = true
     } else if (eventData.message === '!debug off') {
-        system.clearRun(runningDebugFunctionCallback)
-        player.onScreenDisplay.setActionBar('Debug Menu Closed')
+        if (debugHasBeenActivatedBefore) {
+            // system.clearRun will throw an error if clearing a function that was never set to run before
+            system.clearRun(runningDebugFunctionCallback)
+        }
+        // Initially, this script called the player.onScreenDisplay.setActionBar command directly.
+        //  This started throwing errors when upgrading to @minecraft/server 1.12.0-beta because
+        //  you can no longer do that directly. It has to be wrapped in a system.run() call.
+        system.run(() => {
+            player.onScreenDisplay.setActionBar('Debug Menu Closed')
+        })
+        debugHasBeenActivatedBefore = false
     }
 })
