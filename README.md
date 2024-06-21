@@ -6,16 +6,18 @@
 
 ![Debug Screen Logo, a block of bedrock with a red bug logo crawling on the side](./Source%20Behavior%20Pack/pack_icon.png)
 
-## What Does This Pack Do?
+# What Does This Pack Do?
 
 Minecraft Bedrock lacks a debug screen (unless you have one of the developers' copies, that is). If you have played the Java version, you might be familiar with how useful that screen is. This behavior pack brings some of that functionality into Bedrock.
 
 
-# How to Use
+# Adding It To Your Worlds
 
 ## How to Install
 
-(Coming soon)
+Download the [latest version](https://github.com/GraphicArtQuest/Bedrock-Debug-Screen/releases/latest) of the addon. Once downloaded, double click it to run. Minecraft will automatically import the addon.
+
+Your world will need to enable the Beta APIs in the game settings for this addon to work. Please note that this is an irreversible setting change.
 
 ## Using In Game
 
@@ -25,7 +27,7 @@ Once you are playing, bring up the chat menu (default key binding is <kbd>T</kbd
 
 and press enter. When you close the chat window, you'll now see a debug screen like this:
 
-(Screenshot coming soon).
+![Bedrock debug screenshot in action](./images/Debug%20screen%20in%20action.jpg)
 
 When you no longer want to see this information, open the chat menu again and type
 
@@ -33,9 +35,29 @@ When you no longer want to see this information, open the chat menu again and ty
 
 then press enter. Now when you close the window that debug screen will go away.
 
+## Troubleshooting
+
+### Requesting dependency on beta APIs
+
+```
+[Scripting][error]-Plugin [Minecraft Bedrock Debug Screen - 2.0.0] - requesting dependency on beta APIs [@minecraft/server - 1.12.0-beta], but the Beta APIs experiment is not enabled.
+```
+
+You have activated the add-on correctly, but you need to activate the Beta APIs in your game settings.
+
+### Unknown command: !
+
+```
+Unknown command: !. Please check that the command exists and that you have prmission to use it.
+```
+
+You have accidentally entered the command with the '/' preceding the '!'. You must remove the slash before entering the command.
+
 ## Debug Screen Limitations
 
-(Coming soon)
+- Weather will display as "Not yet identified" until there is a weather change event. This is an API limitation I have not figured out how to overcome yet.
+- When looking at blocks that are in unloaded chunks, the "Looking at Block" section will say "None".
+- I have not found a way to identify block lighting levels yet. There does not seem to be an API call for this info.
 
 # Contributions
 
@@ -72,7 +94,7 @@ To submit a pull request,
 
 1. Fork and clone the repository
 1. Create a branch for your edits
-1. Make sure your work follows the [Common Commit Guidance][gaq common commit] guidance
+1. Make sure your work follows the [Common Commit Guidance][wf common commit] guidance
 
 ## Development Environment
 
@@ -85,7 +107,7 @@ cd Bedrock-Debug-Screen
 
 Use the command `npm run dev` to package the source files into the Minecraft behavior pack development folder.
 
-All commits must follow the [GraphicArtQuest Common Commit Guidance][gaq common commit]. *This specification is inspired by and supersedes the [Angular Commit Message](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit).* This project has no custom scopes.
+All commits must follow the [Wayfind Entertainment Common Commit Guidance][wf common commit]. *This specification is inspired by and supersedes the [Angular Commit Message](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit).* This project has no custom scopes.
 
 </details>
 
@@ -113,4 +135,4 @@ Maintained by [M. Scott Lassiter][maintainer].
 [security policy]: https://github.com/GraphicArtQuest/Bedrock-Debug-Screen/security/policy
 [choose issue]: https://github.com/GraphicArtQuest/Bedrock-Debug-Screen/issues/new/choose
 [enhancements requested]: https://github.com/GraphicArtQuest/Bedrock-Debug-Screen/labels/enhancement
-[gaq common commit]: https://github.com/GraphicArtQuest/Common-Commit-Guidance
+[wf common commit]: https://github.com/WayfindEntertainment/Common-Commit-Guidance/
