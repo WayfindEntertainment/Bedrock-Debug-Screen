@@ -1,6 +1,6 @@
 {
     "name": "minecraft-bedrock-debug-screen",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "description": "A Minecraft Bedrock behavior pack that adds debug screen features",
     "engines": {
         "node": ">=16.7.0"
@@ -33,6 +33,6 @@
         "prettier": "^2.8.8"
     },
     "dependencies": {
-        "@minecraft/server": "^1.2.0-beta.1.19.80-stable"
+        "@minecraft/server": "^1.12.0-beta.1.21.1-stable"
     }
 }
