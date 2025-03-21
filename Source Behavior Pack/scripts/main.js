@@ -7,15 +7,6 @@ import { world, system } from '@minecraft/server'
  * @typedef {import('@minecraft/server').Player} Player
  */
 
-// Weather Determination
-//
-// Unfortunately, there is not yet a way to query weather. Instead, the work around is to subscribe to the
-// weatherChange event and get it that way.
-let weather = 'Not yet identified'
-world.beforeEvents.weatherChange.subscribe((event) => {
-    weather = event.newWeather
-})
-
 /**
  * Turns Minecraft's day tick number into a 24 based hour time string (e.g. 23:59).
  * @param {number} time The game tick time. Must be coercible to an integer between 0 and 24000.
@@ -58,7 +49,7 @@ function showDebugInfo(player) {
             playerSpawnString = `${spawnDimension} (${playerSpawn?.x}, ${playerSpawn?.y}, ${playerSpawn?.z})`
         } else {
             const defaultSpawn = world.getDefaultSpawnLocation()
-            playerSpawnString = `World spawn: (${defaultSpawn.x}, ${defaultSpawn.y}, ${defaultSpawn.z})`
+            playerSpawnString = `World spawn: (${defaultSpawn.x}, ${defaultSpawn.z})`
         }
 
         const playerBlock = {
@@ -89,7 +80,7 @@ function showDebugInfo(player) {
 
         const block = player.getBlockFromViewDirection()
         let blockString = ''
-        if (block?.block.isValid()) {
+        if (block?.block.isValid) {
             // If no block is returned, or block is in an unloaded chunk, trying any of these operations throws an error
             if (block.block.isWaterlogged) {
                 blockString = 'waterlogged '
@@ -172,7 +163,7 @@ Looking at
   Entity: ${entityString}
 
 Dimension: ${player.dimension.id.substring(10, player.dimension.id.length)}
-Weather:   ${weather}
+Weather:   ${world.getDimension(player.dimension.id).getWeather()}
 Day ${day} ${translateTimeOfDay(world.getTimeOfDay())}
 Moon Phase: ${moonPhaseString}
 
