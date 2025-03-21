@@ -55,9 +55,9 @@ You have accidentally entered the command with the '/' preceding the '!'. You mu
 
 ## Debug Screen Limitations
 
-- Weather will display as "Not yet identified" until there is a weather change event. This is an API limitation I have not figured out how to overcome yet.
 - When looking at blocks that are in unloaded chunks, the "Looking at Block" section will say "None".
 - I have not found a way to identify block lighting levels yet. There does not seem to be an API call for this info.
+- Player or block biome type is not easily accessible via API call yet.
 
 # Contributions
 
