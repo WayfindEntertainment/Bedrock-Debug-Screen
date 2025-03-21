@@ -92,6 +92,10 @@ function showDebugInfo(player) {
                 blockString += block.block.typeId // If not minecraft namespace, use the full value
             }
             blockString += ` (${block.block.x}, ${block.block.y}, ${block.block.z})`
+            const redstonePower = block.block.getRedstonePower()
+            if (redstonePower) {
+                blockString += `, Redstone Power: ${block.block.getRedstonePower()}`
+            }
         } else {
             blockString = 'None'
         }
