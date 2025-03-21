@@ -2,6 +2,8 @@
 // eslint-disable-next-line import/no-unresolved
 import { world, system } from '@minecraft/server'
 
+// TODO: Add biome type at block location once the APIs support.
+
 /**
  * The Player class defines an entity controlled by a human player.
  * @typedef {import('@minecraft/server').Player} Player
