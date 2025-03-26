@@ -117,6 +117,12 @@ function showDebugInfo(player) {
 
             const loc = entity.entity.location
             entityString += ` (${loc.x.toFixed(1)}, ${loc.y.toFixed(1)}, ${loc.z.toFixed(1)})`
+
+            if (entity?.entity.getComponent('minecraft:health')) {
+                entityString += `, Health: ${
+                    entity.entity.getComponent('minecraft:health').currentValue
+                } `
+            }
         } else {
             entityString = 'None'
         }
