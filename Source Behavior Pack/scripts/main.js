@@ -192,15 +192,16 @@ let runningDebugFunctionCallback
 let debugHasBeenActivatedBefore = false
 world.beforeEvents.chatSend.subscribe((eventData) => {
     const player = eventData.sender
-    // ESLint thinks this next line is invalid because it erroneously believes eventData.cancel is read only, but it
-    //      isn't. This line prevents showing the typed custom command text in the chat window.
-    // eslint-disable-next-line no-param-reassign
-    eventData.cancel = true
     if (eventData.message === '!debug on' && debugHasBeenActivatedBefore === false) {
         // Must not let this function run if it already has been. If it is run twice, the user will not be able
         //  to clear this callback function from the system and it will run forever.
         runningDebugFunctionCallback = showDebugInfo(player)
         debugHasBeenActivatedBefore = true
+
+        // ESLint thinks this next line is invalid because it erroneously believes eventData.cancel is read only, but it
+        //      isn't. This line prevents showing the typed custom command text in the chat window.
+        // eslint-disable-next-line no-param-reassign
+        eventData.cancel = true
     } else if (eventData.message === '!debug off') {
         if (debugHasBeenActivatedBefore) {
             // system.clearRun will throw an error if clearing a function that was never set to run before
@@ -213,5 +214,10 @@ world.beforeEvents.chatSend.subscribe((eventData) => {
             player.onScreenDisplay.setActionBar('Debug Menu Closed')
         })
         debugHasBeenActivatedBefore = false
+
+        // ESLint thinks this next line is invalid because it erroneously believes eventData.cancel is read only, but it
+        //      isn't. This line prevents showing the typed custom command text in the chat window.
+        // eslint-disable-next-line no-param-reassign
+        eventData.cancel = true
     }
 })
