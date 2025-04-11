@@ -3,30 +3,30 @@
     "header": {
         "description": "Adds debug screen features to the Bedrock version. Activate using the chat window by typing:\n\"!debug on\" or \"!debug off\".",
         "name": "Minecraft Bedrock Debug Screen",
-        "uuid": "09645edd-c902-4f17-8024-8829ea1a1c39",
-        "version": [2, 0, 0],
-        "min_engine_version": [1, 21, 0]
+        "uuid": "731b28d1-0234-4e4d-bca5-89ea6b063e8b",
+        "version": [2, 1, 0],
+        "min_engine_version": [1, 21, 71]
     },
     "modules": [
         {
             "description": "Minecraft Bedrock Debug Screen Behavior Pack",
             "type": "data",
-            "uuid": "936d0568-581e-43e6-a076-8a1325c99968",
-            "version": [2, 0, 0]
+            "uuid": "6c56efa3-d13a-40dd-8be7-1e84d22df2d2",
+            "version": [2, 1, 0]
         },
         {
             "description": "Minecraft Bedrock Debug Screen scripts",
             "language": "javascript",
             "type": "script",
-            "uuid": "372d4697-4469-43e9-b3ac-9727cf9466ba",
-            "version": [2, 0, 0],
+            "uuid": "fc367ad4-b2e2-40dd-85a1-fc2428d60c4d",
+            "version": [2, 1, 0],
             "entry": "scripts/main.js"
         }
     ],
     "dependencies": [
         {
             "module_name": "@minecraft/server",
-            "version": "2.0.0-alpha"
+            "version": "2.0.0-beta"
         }
     ]
 }
