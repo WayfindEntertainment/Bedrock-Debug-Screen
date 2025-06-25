@@ -1,6 +1,6 @@
 # Bedrock Debug Screen
 
-[![Licensed under the GPL version 3.0](https://img.shields.io/github/license/GraphicArtQuest/Blender-Scripting-Assistant?color=blue)][license]
+[![Licensed under the GPL version 3.0](https://img.shields.io/github/license/WayfindEntertainment/Bedrock-Debug-Screen?color=blue)][license]
 [![Maintained](https://img.shields.io/badge/Maintained%3F-Yes-brightgreen.svg)][maintainer]
 [![Contributions welcome](https://img.shields.io/badge/Contributions-Welcome-brightgreen.svg?style=flat)](#contributions)
 
@@ -15,9 +15,9 @@ Minecraft Bedrock lacks a debug screen (unless you have one of the developers' c
 
 ## How to Install
 
-Download the [latest version](https://github.com/GraphicArtQuest/Bedrock-Debug-Screen/releases/latest) of the addon. Once downloaded, double click it to run. Minecraft will automatically import the addon.
+Download the [latest version](https://github.com/WayfindEntertainment/Bedrock-Debug-Screen/releases/latest) of the addon. Once downloaded, double click it to run. Minecraft will automatically import the addon.
 
-Your world will need to enable the Beta APIs in the game settings for this addon to work. Please note that this is an irreversible setting change.
+Your world will need to enable the Beta APIs in the game settings for this addon to work. Please note that this is an irreversible setting change for this world.
 
 ## Using In Game
 
@@ -39,7 +39,7 @@ then press enter. Now when you close the window that debug screen will go away.
 
 ### Requesting dependency on beta APIs
 
-```
+```bash
 [Scripting][error]-Plugin [Minecraft Bedrock Debug Screen - 2.0.0] - requesting dependency on beta APIs [@minecraft/server - 1.12.0-beta], but the Beta APIs experiment is not enabled.
 ```
 
@@ -47,21 +47,37 @@ You have activated the add-on correctly, but you need to activate the Beta APIs 
 
 ### Unknown command: !
 
-```
+```bash
 Unknown command: !. Please check that the command exists and that you have prmission to use it.
 ```
 
-You have accidentally entered the command with the '/' preceding the '!'. You must remove the slash before entering the command.
+You have accidentally entered the command with the `/` preceding the `!`. You must remove the slash before entering the command.
+
+### Requesting Invalid Module Version
+
+If you get an error similar to this:
+```bash
+[Scripting][error]-Plugin [Minecraft Bedrock Debug Screen] - module [Minecraft Bedrock Debug Screen - 2.1.1] requesting invalid module version [@minecraft/server - 2.0.0-beta].
+
+Current [beta] version is [2.1.0-beta].
+
+Available versions:
+0.1.0
+1.19.0
+2.1.0-beta
+3.0.0-alpha
+```
+
+it means the latest official Minecraft API has updated. The only way to resolve this is by updating the manifest to the new version and reloading the addon. [Submit a ticket][choose issue] to let me know that it needs fixing!
 
 ## Debug Screen Limitations
 
-- When looking at blocks that are in unloaded chunks, the "Looking at Block" section will say "None".
-- I have not found a way to identify block lighting levels yet. There does not seem to be an API call for this info.
-- Player or block biome type is not easily accessible via API call yet.
+- To prevent run time errors from trying to access blocks or entities in unloaded chunks, the "Looking at Block" section will say "None" if the block is out of ticking distance.
+- The official API has no way to calculate block lighting levels or biome types.
 
 # Contributions
 
-Contributions are welcome! Please help keep this project open and inclusive. Refer to the [Code of Conduct](https://github.com/GraphicArtQuest/.github/blob/main/CODE_OF_CONDUCT.md) before your first contribution.
+Contributions are welcome! Please help keep this project open and inclusive. Refer to the [Code of Conduct](https://github.com/WayfindEntertainment/.github/blob/main/CODE_OF_CONDUCT.md) before your first contribution.
 
 ***REMEMBER THIS IS A PROJECT WITH CHILDREN AS A SIGNIFICANT PART OF THE TARGET AUDIENCE!***
 
@@ -101,7 +117,7 @@ To submit a pull request,
 This project uses a Node environment to help with linting, formatting, testing, and distribution. To install a local copy, clone the repository:
 
 ```bash
-git clone https://github.com/GraphicArtQuest/Bedrock-Debug-Screen.git
+git clone https://github.com/WayfindEntertainment/Bedrock-Debug-Screen.git
 cd Bedrock-Debug-Screen
 ```
 
@@ -117,11 +133,11 @@ To help as many fellow developers as possible, this behavior pack and all other 
 
 # Contact
 
-If you find this project useful, please leave a :star2: and subscribe to the Graphic Art Quest YouTube channel for tutorials and 3D graphic art adventures!
+If you find this project useful, please leave a :star2: and subscribe to the Wayfind Minecraft YouTube channel for tutorials and 3D graphic art adventures!
 
-[![Subscribe to the Graphic Art Quest YouTube channel](https://img.shields.io/badge/Subscribe%20to%20Graphic%20Art%20Quest-FF0000?style=plastic&logo=youtube&logoColor=white)][subscribe]
+[![Subscribe to the Wayfind Minecraft YouTube channel](https://img.shields.io/badge/Subscribe%20to%20Wayfind%20Minecraft-FF0000?style=plastic&logo=youtube&logoColor=white)][subscribe]
 
-Maintained by [M. Scott Lassiter][maintainer].
+Maintained by [Wayfind Minecraft][maintainer].
 
 
 [![GitHub Badge Profile](https://img.shields.io/badge/GitHub-100000?style=plastic&logo=github&logoColor=white)](https://github.com/M-Scott-Lassiter)
@@ -130,9 +146,10 @@ Maintained by [M. Scott Lassiter][maintainer].
 [![Stackoverflow Badge Profile](https://img.shields.io/badge/stackoverflow-orange.svg?longCache=true&style=plastic&logo=stackoverflow&logoColor=white)](https://stackoverflow.com/users/6186333/sandpiper)
 
 [license]: LICENSE.txt
-[maintainer]: https://graphicartquest.com/author/scott-lassiter/
-[subscribe]: https://www.youtube.com/channel/UCFYKeFMbQnY5CdzFH62PAhg?sub_confirmation=1
-[security policy]: https://github.com/GraphicArtQuest/Bedrock-Debug-Screen/security/policy
-[choose issue]: https://github.com/GraphicArtQuest/Bedrock-Debug-Screen/issues/new/choose
-[enhancements requested]: https://github.com/GraphicArtQuest/Bedrock-Debug-Screen/labels/enhancement
+
+[maintainer]: mailto:support@wayfindminecraft.com
+[subscribe]: https://youtube.com/@wayfindminecraft?si=v0LHEqHBJqskq9Ou?sub_confirmation=1
+[security policy]: https://github.com/WayfindEntertainment/Bedrock-Debug-Screen/security/policy
+[choose issue]: https://github.com/WayfindEntertainment/Bedrock-Debug-Screen/issues/new/choose
+[enhancements requested]: https://github.com/WayfindEntertainment/Bedrock-Debug-Screen/labels/enhancement
 [wf common commit]: https://github.com/WayfindEntertainment/Common-Commit-Guidance/
