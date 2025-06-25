@@ -8,7 +8,7 @@
     "main": "main.js",
     "scripts": {
         "dev": "node dev.js",
-        "format": "eslint . --ext .js --fix && npx prettier . --write",
+        "format": "npx wayfindpc format",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
@@ -25,14 +25,10 @@
         "url": "https://github.com/GraphicArtQuest/Bedrock-Debug-Screen/issues"
     },
     "homepage": "https://github.com/GraphicArtQuest/Bedrock-Debug-Screen#readme",
-    "devDependencies": {
-        "eslint": "^8.40.0",
-        "eslint-config-airbnb-base": "^15.0.0",
-        "eslint-config-prettier": "^8.8.0",
-        "eslint-plugin-prettier": "^4.2.1",
-        "prettier": "^2.8.8"
-    },
     "dependencies": {
-        "@minecraft/server": "^2.0.0-beta.1.21.80-preview.21"
+        "@minecraft/server": "^2.1.0-rc.1.21.100-preview.22"
+    },
+    "devDependencies": {
+        "wayfindpc": "^1.1.10"
     }
 }
