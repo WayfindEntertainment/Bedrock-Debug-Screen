@@ -1,6 +1,6 @@
 {
     "name": "minecraft-bedrock-debug-screen",
-    "version": "2.0.0",
+    "version": "2.1.1",
     "description": "A Minecraft Bedrock behavior pack that adds debug screen features",
     "engines": {
         "node": ">=16.7.0"
@@ -13,7 +13,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/GraphicArtQuest/Bedrock-Debug-Screen.git"
+        "url": "git+https://github.com/WayfindEntertainment/Bedrock-Debug-Screen.git"
     },
     "keywords": [
         "Minecraft",
@@ -22,9 +22,9 @@
     "author": "M. Scott Lassiter, Wayfind Kids and Graphic Art Quest",
     "license": "GPL-3.0-or-later",
     "bugs": {
-        "url": "https://github.com/GraphicArtQuest/Bedrock-Debug-Screen/issues"
+        "url": "https://github.com/WayfindEntertainment/Bedrock-Debug-Screen/issues"
     },
-    "homepage": "https://github.com/GraphicArtQuest/Bedrock-Debug-Screen#readme",
+    "homepage": "https://github.com/WayfindEntertainment/Bedrock-Debug-Screen#readme",
     "dependencies": {
         "@minecraft/server": "^2.1.0-rc.1.21.100-preview.22"
     },
